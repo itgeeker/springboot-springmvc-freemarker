@@ -79,7 +79,7 @@ cargo {
     port = 8080
 
     deployable {
-        context = 'idc-arc-new'
+        context = 'idc-arc'
     }
 
     remote {
