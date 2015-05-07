@@ -7,7 +7,7 @@
     </head
     <body>
 	    <div id="header">
-			 <#include "../includes/sites/default/header.ftl"/>
+			 <#include "../includes/sites/{$sitename}/header.ftl"/>
 		</div>
 		
 		<div id="nav">
