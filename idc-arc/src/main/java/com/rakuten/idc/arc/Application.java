@@ -14,11 +14,11 @@ import org.springframework.context.annotation.Configuration;
 public class Application extends SpringBootServletInitializer {
 
     public static void main(final String[] args) {
-        SpringApplication.run(ApplicationTest.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Override
     protected final SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
-        return application.sources(ApplicationTest.class);
+        return application.sources(Application.class);
     }
 }
