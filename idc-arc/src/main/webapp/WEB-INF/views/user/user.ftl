@@ -17,7 +17,7 @@
     
 	<table class="datatable">
 		<tbody>
-			<tr>
+			<tr>	
 				<th>Email</th>  <th>Name</th>
 		
 			</tr>
@@ -28,8 +28,7 @@
 	</#list>
 		</tbody>
 	</table>
- 
-</div>  
+ </div>  
 
 </@layout.defaultLayout>
  

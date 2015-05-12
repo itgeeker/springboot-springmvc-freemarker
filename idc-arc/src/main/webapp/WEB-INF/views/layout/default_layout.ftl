@@ -7,11 +7,11 @@
     </head
     <body>
 	    <div id="header">
-			 <#include "../includes/sites/{$sitename}/header.ftl"/>
+			 <#include "../includes/sites/${Request.sitename}/header.ftl"/>
 		</div>
 		
 		<div id="nav">
-			 <#include "../includes/sites/default/menu.ftl"/>
+			 <#include "../includes/sites/${Request.sitename}/menu.ftl"/>
 		</div>
 		
 		<div id="section">
@@ -19,7 +19,7 @@
 		</div>
 		
 		<div id="footer">
-			<#include "../includes/sites/default/footer.ftl"/>
+			<#include "../includes/sites/${Request.sitename}/footer.ftl"/>
 		</div>   
     </body>
   </html>

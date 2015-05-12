@@ -8,6 +8,7 @@
             Waddup!!!!!!!!!!!!!!!!!!!!
         </p>
         <p>${message}</p>
+        <p>${Request.sitename}</p>
     </div>   
 </div>
 </@layout.defaultLayout>

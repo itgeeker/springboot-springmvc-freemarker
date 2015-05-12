@@ -1,0 +1,1 @@
+<div><h1>this is the japan footer</h1></div>

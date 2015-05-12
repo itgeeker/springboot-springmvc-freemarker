@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import com.rakuten.idc.arc.helper.ActionHelper;
+
 
 /**
  * SiteFilter process all the request and based on site_id on request 
@@ -34,6 +36,8 @@ public class SiteFilter implements Filter {
     HttpServletResponse response = (HttpServletResponse) res;
     HttpServletRequest request = (HttpServletRequest) req;
     
+    String siteName = ActionHelper.getSiteFromRequest(request);
+    request.setAttribute("sitename", siteName);
     chain.doFilter(req, res);
   }
 
