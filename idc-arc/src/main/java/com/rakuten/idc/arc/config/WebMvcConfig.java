@@ -12,12 +12,11 @@ import com.rakuten.idc.arc.Application;
 @Configuration
 @ComponentScan(basePackageClasses = Application.class, includeFilters = @Filter(Controller.class), useDefaultFilters = false)
 class WebMvcConfig extends WebMvcConfigurationSupport {
-    
+
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+    public void configureDefaultServletHandling(
+            DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
-    
-    
-    
+
 }

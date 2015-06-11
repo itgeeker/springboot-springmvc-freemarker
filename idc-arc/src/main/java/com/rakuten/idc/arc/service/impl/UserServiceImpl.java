@@ -12,54 +12,59 @@ import com.rakuten.idc.arc.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
-	private static List<User> userList = new ArrayList<User>();
-	private static Map<String, User> userMap = new ConcurrentHashMap<String, User>();
-	
-	
-	static{
-		User user = new User();
-		user.setEmail("singh.niraj@aranin.com");
-		user.setName("Niraj Singh");
-		user.setPassword("qwerty");
-		userList.add(user);
-		userMap.put(user.getEmail(), user);
-		
-		user = new User();
-		user.setEmail("niraj.aar@gmail.com");
-		user.setName("Niraj AAR");
-		user.setPassword("qwerty");
-		userList.add(user);
-		userMap.put(user.getEmail(), user);
-		
-		
-		user = new User();
-		user.setEmail("john@doe.com");
-		user.setName("John Doe");
-		user.setPassword("qwerty");
-		userList.add(user);
-		userMap.put(user.getEmail(), user);
-		
-		user = new User(); 
-		user.setEmail("aarav@aarav.com");
-		user.setName("Aarav Doe");
-		user.setPassword("qwerty");
-		userList.add(user);
-		userMap.put(user.getEmail(), user);
-	}
+    private static List<User> userList = new ArrayList<User>();
+    private static Map<String, User> userMap = new ConcurrentHashMap<String, User>();
 
-	@Override
-	public User save(User user) {
-		//save the user to map		
-		userMap.put(user.getEmail(), user);
-		//save the user to list
-		userList.add(user);
-		return user;
-	}
+    static {
+        User user = new User();
+        user.setEmail("singh.niraj@aranin.com");
+        user.setUserName("Niraj Singh");
+        user.setPassword("qwerty");
+        userList.add(user);
+        userMap.put(user.getEmail(), user);
 
-	@Override
-	public List<User> getList() {
-		// return the userList
-		return this.userList;
-	}
+        user = new User();
+        user.setEmail("niraj.aar@gmail.com");
+        user.setUserName("Niraj AAR");
+        user.setPassword("qwerty");
+        userList.add(user);
+        userMap.put(user.getEmail(), user);
+
+        user = new User();
+        user.setEmail("john@doe.com");
+        user.setUserName("John Doe");
+        user.setPassword("qwerty");
+        userList.add(user);
+        userMap.put(user.getEmail(), user);
+
+        user = new User();
+        user.setEmail("aarav@aarav.com");
+        user.setUserName("Aarav Doe");
+        user.setPassword("qwerty");
+        userList.add(user);
+        userMap.put(user.getEmail(), user);
+    }
+
+    @Override
+    public User save(User user) {
+        // save the user to map
+        userMap.put(user.getEmail(), user);
+        // save the user to list
+        userList.add(user);
+        return user;
+    }
+
+    @Override
+    public List<User> getList() {
+        // return the userList
+        return userList;
+    }
+
+    @Override
+    public void addUser(User user) {
+        userList.add(user);
+        userMap.put(user.getEmail(), user);
+
+    }
 
 }

@@ -5,30 +5,20 @@
 <div id="content">
      
   <fieldset>
-  	<legend>Add User</legend>
-  	<form name="user" action="adduser" method="post">
-    	Firstname: <input type="text" name="firstname"> <br>
-    	Lastname: <input type="text" name="lastname">   <br>
-    	<input type="submit" value="   Save   ">
+  	<legend>Register User:</legend>
+  	<form name="user" action="addUser" method="post">
+  	<table>
+    	<tr><td>First Name: </td><td> <input type="text" name="firstName"> </td> </tr>
+    	<tr><td>Last Name: </td><td>  <input type="text" name="lastName">   </td> </tr>
+    	<tr><td>Email Name: </td><td> <input type="text" name="email">   </td></tr>
+    	<tr><td>Password: </td><td>   <input type="password" name="password">   </td></tr>
+    	<tr><td>Re-Enter: </td><td>   <input type="password" name="reEnteredPassword">   </td></tr>
+    	<tr><td><input type="submit" value="   Register   "> </td><td> <button type="button" onclick="window.location='./users'">Rakuten Customers !!</button> </td></tr>
+    </table>
  	 </form>
   </fieldset>
   <br>
-   
-    
-	<table class="datatable">
-		<tbody>
-			<tr>	
-				<th>Email</th>  <th>Name</th>
-		
-			</tr>
-			<#list users as user>
-			<tr>
-				<td>${user.email}</td> <td>${user.name}</td>
-			</tr>
-	</#list>
-		</tbody>
-	</table>
- </div>  
+</div>  
 
 </@layout.defaultLayout>
  

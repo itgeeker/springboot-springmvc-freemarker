@@ -5,6 +5,10 @@ import java.util.List;
 import com.rakuten.idc.arc.model.User;
 
 public interface UserService {
-    User save(User user);
-    List<User> getList();
+
+    public User save(User user);
+
+    public List<User> getList();
+
+    public void addUser(User user);
 }

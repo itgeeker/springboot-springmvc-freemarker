@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.rakuten.idc.arc.helper.ActionHelper;
+import com.rakuten.idc.arc.constants.ArcConstants;
 
 @Controller
 public class HomeController {
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("home/home");
-		String str = "Welcome to Accounts.Rakuten.com";
-		mav.addObject("message", str);
-		return mav;
-	}
+    @RequestMapping(value = ArcConstants.ROOT, method = RequestMethod.GET)
+    public ModelAndView home(HttpServletRequest request) {
+        String messageString = ArcConstants.WELCOME_MESSAGE;
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName(ArcConstants.HOME_VIEW);
+        mav.addObject(ArcConstants.MESSAGE, messageString);
+        return mav;
+    }
 }

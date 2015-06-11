@@ -7,16 +7,18 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
+import com.rakuten.idc.arc.constants.ArcConstants;
+
 @Configuration
 public class FreemarkerConfig {
 
-    @Value("${spring.view.prefix}")
+    @Value(ArcConstants.VIEW_PREFIX)
     private String viewPrefix;
 
-    @Value("${spring.view.suffix}")
+    @Value(ArcConstants.VIEW_SUFFIX)
     private String viewSuffix;
-    
-    @Value("${spring.freemarker.templateLoaderPath}")
+
+    @Value(ArcConstants.TEMPLATE_LOADER_PATH)
     private String templatePath;
 
     @Bean
@@ -24,7 +26,7 @@ public class FreemarkerConfig {
         FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
         System.out.println("templatePath : " + templatePath);
         configurer.setTemplateLoaderPath(templatePath);
-        configurer.setDefaultEncoding("UTF-8");
+        configurer.setDefaultEncoding(ArcConstants.DEFAULT_ENCODING);
         return configurer;
     }
 
@@ -36,7 +38,7 @@ public class FreemarkerConfig {
         System.out.println("viewSuffix : " + viewSuffix);
         viewResolver.setPrefix(viewPrefix);
         viewResolver.setSuffix(viewSuffix);
-        viewResolver.setContentType("text/html;charset=UTF-8");
+        viewResolver.setContentType(ArcConstants.DEFAULT_CONTENT_TYPE);
         viewResolver.setExposeSpringMacroHelpers(true);
         viewResolver.setExposeRequestAttributes(false);
         viewResolver.setExposeSessionAttributes(false);
