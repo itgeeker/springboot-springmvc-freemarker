@@ -7,6 +7,7 @@ public class User {
     private String userName;
     private String firstName;
     private String lastName;
+    private String passwordAuthenticationToken;
 
     public String getUserName() {
         return userName;
@@ -52,6 +53,15 @@ public class User {
     public String toString() {
         return "User [email=" + email + ", userName=" + userName
                 + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+    }
+
+    public String getPasswordAuthenticationToken() {
+        return passwordAuthenticationToken;
+    }
+
+    public void setPasswordAuthenticationToken(
+            String passwordAuthenticationToken) {
+        this.passwordAuthenticationToken = passwordAuthenticationToken;
     }
 
 }

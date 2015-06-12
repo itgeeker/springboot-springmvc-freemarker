@@ -1,5 +1,8 @@
 package com.rakuten.idc.arc.controller.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,6 +43,8 @@ public class LoginController {
         if (loginService.authenticate(user)) {
             model.addObject(ArcConstants.RESULT,
                     ArcConstants.AUTHENTICATION_SUCCESS);
+            model.addObject("userDetails",loginService.getUserDetails(user
+                    .getPasswordAuthenticationToken()));
         } else {
             model.addObject(ArcConstants.RESULT,
                     ArcConstants.AUTHENTICATION_FAILURE);
