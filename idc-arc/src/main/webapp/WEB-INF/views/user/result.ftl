@@ -5,7 +5,7 @@ table, th, td {
     border: 1px inset blue;
 	bgcolor: grey
 }
-</style>
+</style> 
 <div id="content">
 
   <br> Result : ${result}
@@ -14,7 +14,13 @@ table, th, td {
 		<br><br>Here are the Details....
 		<table>
 			<#list userDetails?keys as key>
-			<tr><td>${key} </td><td> ${userDetails[key]} </td><tr>
+			<tr><td>${key} </td><td><table>
+									<#assign propertyMap=userDetails[key]> 
+									<#list propertyMap?keys as key2>
+									<tr><td>${key2}</td><td> ${propertyMap[key2]!"-"} </td></tr>
+									</#list>
+									</table>
+ 			</td></tr>
 			</#list>
 		</table> 
 	<#else>
