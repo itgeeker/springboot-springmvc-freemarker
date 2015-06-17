@@ -1,11 +1,12 @@
 <#macro defaultLayout title="Rakuten-arc">
   <html>
-  	<head>
+  	<head>  	
       <title>
         ${title}
       </title>
+      <link rel="stylesheet" type="text/css" href="./resources/css/core.css" media="all">
     </head
-    <body>
+    <body id="main_body">
 	    <div id="header">
 			 <#include "../includes/sites/${Request.sitename}/header.ftl"/>
 		</div>
