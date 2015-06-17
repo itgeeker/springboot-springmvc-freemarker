@@ -14,7 +14,18 @@ public interface UserService {
 
     public void addUser(User user);
 
-    public ResponseModel getClientAuth();
+    public ResponseModel getClientAuthention();
 
     public ResponseModel createUser(MemberV1_2 member, String access_token);
+
+    public ResponseModel getUserAuthentication(User user);
+
+    public ResponseModel getUserDetails(String authenticationToken);
+
+    public boolean isExistingUser(User user, String authToken);
+
+    public boolean updateUser(MemberV1_2 member, String authToken);
+
+    public boolean deleteUser(MemberV1_2 member, String authToken);
+
 }

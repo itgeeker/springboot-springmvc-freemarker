@@ -25,6 +25,8 @@ public class ArcConstants {
     public static final String RESULT_VIEW = "user/result";
     public static final String USERS_VIEW = "user/users";
     public static final String USER_VIEW = "user/user";
+    public static final String SIGNUP_VIEW = "user/signup";
+    public static final String SUCCESS_VIEW = "user/success";
 
     /**
      * View objects/parameters (Objects which are sending to view)
@@ -40,7 +42,16 @@ public class ArcConstants {
     public static final String LAST_NAME = "lastName";
     public static final String EMAIL = "email";
     public static final String SITE_NAME = "sitename";
-
+    public static final String USER_DETAILS = "userDetails";
+    public static final String ERROR ="error";
+    public static final String CREATE_MEMBER_MODEL = "createMemberModel";
+    public static final String PROFILE_MODEL = "Profile Model";
+    public static final String CARD_MODEL = "Card Model";
+    public static final String GLOBAL_ID_MODEL = "Global Id Model";
+    public static final String ADDRESS_MODEL = "Address Model";
+    public static final String MEMBER_MODEL ="Member Model";
+    
+    
     /**
      * Request constants
      */
@@ -55,7 +66,8 @@ public class ArcConstants {
     public static final String REQUEST_MAPPING_USERS = "/users";
     public static final String REQUEST_MAPPING_REGISTER = "/register";
     public static final String REQUEST_MAPPING_ADD_USER = "/addUser";
-
+    public static final String REQUEST_MAPPING_SIGNUP = "/signup";
+    public static final String REQUEST_MAPPING_DO_SIGNUP = "/dosignup";
     /**
      * Spring Related Constants
      */
@@ -73,6 +85,7 @@ public class ArcConstants {
     public static final String AUTHENTICATION_ERROR = "Error while authenticating...";
     public static final String PASSWORD_MATCH_FAILED = "Password Does not match !! ";
     public static final String ADD_USER_SUCCESSFUL = "Sucessfully added the user !";
+    public static final String SINGUP_MESSAGE = "Signup to Awesome Userprofile project!";
 
     /**
      * Java Classes.
@@ -84,4 +97,11 @@ public class ArcConstants {
      */
     public static final String URL = "http://grp01.gidapi-pri.stg.jp.local";
 
+    /**
+     * Grant Type Constants
+     */
+    public static final String GRANT_TYPE_PASSWORD = "password";
+    public static final String GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
+    
 }
+

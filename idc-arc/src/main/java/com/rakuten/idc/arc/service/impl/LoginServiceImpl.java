@@ -10,18 +10,14 @@ import java.util.Properties;
 
 import org.springframework.stereotype.Service;
 
-import com.rakuten.gid.services.rest.client.ApiClient;
-import com.rakuten.gid.services.rest.client.ApiManager;
 import com.rakuten.gid.services.rest.client.ResponseModel;
-import com.rakuten.gid.services.rest.client.gidimpl.basemodel.AuthV1_2;
-import com.rakuten.gid.services.rest.client.gidimpl.basemodel.MemberV1_2;
+import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.Address;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.AddressModel;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.CardModel;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GetAuthModel;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GidError;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GlobalIdModel;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.ProfileModel;
-import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.Address;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.member.MemberModel;
 import com.rakuten.idc.arc.constants.ArcConstants;
 import com.rakuten.idc.arc.model.User;
@@ -44,27 +40,11 @@ public class LoginServiceImpl implements LoginService {
     }
 
     public boolean authenticateV1_2(User user) {
-        String grantType = "password";
-        String username = user.getUserName();// "testcustomprofile2";
-        String password = user.getPassword();// "test_123";
         String authenticationToken = null;
         GidError error = null;
         GetAuthModel authModelPassword = null;
-        AuthV1_2 auth = new AuthV1_2();
 
-        try {
-            Class.forName(ArcConstants.REGISTER_API_DRIVER);
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
-        auth.setGrant_type(grantType);
-        auth.setUsername(username);
-        auth.setPassword(password);
-        ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, auth,
-                authenticationToken);
-        ResponseModel model = (ResponseModel) apiClient.getFirst();
-
+        ResponseModel model = userServices.getUserAuthentication(user);
         if (model.getResponseCode() == 200) {
             authModelPassword = (GetAuthModel) model;
             authenticationToken = authModelPassword.getAccess_token();
@@ -73,11 +53,9 @@ public class LoginServiceImpl implements LoginService {
             return true;
         } else {
             error = (GidError) model;
-            System.out.println(ArcConstants.AUTHENTICATION_ERROR
-                    + error.toString());
+            System.out.println(ArcConstants.AUTHENTICATION_ERROR + error.toString());
             return false;
         }
-
     }
 
     /**
@@ -99,33 +77,32 @@ public class LoginServiceImpl implements LoginService {
         System.out.println(properties.get(ArcConstants.TEMPLATE_LOADER_PATH));
     }
 
+    /**
+     * Getting the user details of the authenticated user.
+     */
     @Override
-    public Map<String, Object> getUserDetails(String passwordAuthenticationToken) {
-        System.out.println("Entering the getUserDetails");
+    public Map<String, Object> getUserDetails(User user) {
+        System.out.println("Entering the getUserDetails..");
         Map<String, Object> userDetails = new HashMap<String, Object>();
         GidError error = null;
         MemberModel memberModel = null;
-
-        MemberV1_2 member = new MemberV1_2();
-        ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
-                passwordAuthenticationToken);
-        ResponseModel model = (ResponseModel) apiClient.getFirst();
+        ResponseModel model = userServices.getUserDetails(user.getPasswordAuthenticationToken());
+        
         if (model.getResponseCode() == 200) {
             memberModel = (MemberModel) model;
-            userDetails.put("PROFILE_MODEL", createProfileMap(memberModel.getProfile()));
-            userDetails.put("CARD_MODEL", createCardModelMap(memberModel.getCard()));
-            userDetails.put("ADDRESS_MODEL", createAddressMap(memberModel.getAddress()));
-            userDetails.put("GLOBAL_ID_MODEL", createGlobalIdMap(memberModel.getId()));
- //         userDetails.put("MEMBER_MODEL", memberModel.toString());
+            userDetails.put(ArcConstants.PROFILE_MODEL, createProfileMap(memberModel.getProfile()));
+            userDetails.put(ArcConstants.CARD_MODEL, createCardModelMap(memberModel.getCard()));
+            userDetails.put(ArcConstants.ADDRESS_MODEL, createAddressMap(memberModel.getAddress()));
+            userDetails.put(ArcConstants.GLOBAL_ID_MODEL, createGlobalIdMap(memberModel.getId()));
             
             System.out.println("MEMBER_MODEL : "+ memberModel.toString());
             System.out.println("User Details : "+ userDetails);
         } else {
             error = (GidError) model;
-            userDetails.put("ERROR", error);
+            userDetails.put(ArcConstants.ERROR, error);
             System.out.println("Error happened: " + error.toString());
         }
-        System.out.println("Exiting the getUserDetails");
+        System.out.println("Exiting the getUserDetails...");
         return userDetails;
     }
 

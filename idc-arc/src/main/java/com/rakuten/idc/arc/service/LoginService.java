@@ -8,5 +8,5 @@ public interface LoginService {
 
     public boolean authenticate(User user);
 
-    public Map<String, Object> getUserDetails(String passwordAuthenticationToken);
+    public Map<String, Object> getUserDetails(User user);
 }
