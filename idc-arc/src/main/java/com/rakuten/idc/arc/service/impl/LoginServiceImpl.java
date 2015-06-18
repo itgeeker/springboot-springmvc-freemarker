@@ -29,7 +29,7 @@ public class LoginServiceImpl implements LoginService {
     UserServiceImpl userServices = new UserServiceImpl();
 
     @Override
-    public boolean authenticate(User user) {
+    public ResponseModel authenticate(User user) throws Exception {
         return authenticateV1_2(user);
         /*
          * for (User u : userServices.getList()) { if
@@ -39,23 +39,13 @@ public class LoginServiceImpl implements LoginService {
          */
     }
 
-    public boolean authenticateV1_2(User user) {
+    public ResponseModel authenticateV1_2(User user) throws Exception{
         String authenticationToken = null;
         GidError error = null;
         GetAuthModel authModelPassword = null;
 
         ResponseModel model = userServices.getUserAuthentication(user);
-        if (model.getResponseCode() == 200) {
-            authModelPassword = (GetAuthModel) model;
-            authenticationToken = authModelPassword.getAccess_token();
-            user.setPasswordAuthenticationToken(authenticationToken);
-            System.out.println("password token : " + authenticationToken);
-            return true;
-        } else {
-            error = (GidError) model;
-            System.out.println(ArcConstants.AUTHENTICATION_ERROR + error.toString());
-            return false;
-        }
+        return model;
     }
 
     /**

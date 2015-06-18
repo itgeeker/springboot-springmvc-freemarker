@@ -22,7 +22,9 @@ public class ArcConstants {
      */
     public static final String HOME_VIEW = "home/home";
     public static final String LOGIN_VIEW = "user/login";
+    public static final String LOGIN_SUCCESS = "user/loginsuccess";
     public static final String RESULT_VIEW = "user/result";
+    public static final String PROFILE_VIEW = "user/profile";
     public static final String USERS_VIEW = "user/users";
     public static final String USER_VIEW = "user/user";
     public static final String SIGNUP_VIEW = "user/signup";
@@ -102,6 +104,8 @@ public class ArcConstants {
      */
     public static final String GRANT_TYPE_PASSWORD = "password";
     public static final String GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
+    public static final String RESULT_SUCCESS = "authresult";
+    public static final String AUTHMODEL_PASSWORD = "authmodelpassword";
     
 }
 
