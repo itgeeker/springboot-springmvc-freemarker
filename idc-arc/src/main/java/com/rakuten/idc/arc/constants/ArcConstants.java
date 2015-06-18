@@ -47,11 +47,17 @@ public class ArcConstants {
     public static final String USER_DETAILS = "userDetails";
     public static final String ERROR ="error";
     public static final String CREATE_MEMBER_MODEL = "createMemberModel";
-    public static final String PROFILE_MODEL = "Profile Model";
-    public static final String CARD_MODEL = "Card Model";
-    public static final String GLOBAL_ID_MODEL = "Global Id Model";
-    public static final String ADDRESS_MODEL = "Address Model";
-    public static final String MEMBER_MODEL ="Member Model";
+    public static final String PROFILE_MODEL = "ProfileModel";
+    public static final String CARD_MODEL = "CardModel";
+    public static final String GLOBAL_ID_MODEL = "GlobalIdModel";
+    public static final String ADDRESS_MODEL = "AddressModel";
+    public static final String MEMBER_MODEL ="MemberModel";
+    
+    /**
+     * Session Attributes
+     */
+    public static final String AUTHMODEL = "authModel";
+    
     
     
     /**
@@ -70,6 +76,8 @@ public class ArcConstants {
     public static final String REQUEST_MAPPING_ADD_USER = "/addUser";
     public static final String REQUEST_MAPPING_SIGNUP = "/signup";
     public static final String REQUEST_MAPPING_DO_SIGNUP = "/dosignup";
+    public static final String REQUEST_MAPPING_PROFILE = "/profile";
+
     /**
      * Spring Related Constants
      */
@@ -104,8 +112,5 @@ public class ArcConstants {
      */
     public static final String GRANT_TYPE_PASSWORD = "password";
     public static final String GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
-    public static final String RESULT_SUCCESS = "authresult";
-    public static final String AUTHMODEL_PASSWORD = "authmodelpassword";
-    
 }
 

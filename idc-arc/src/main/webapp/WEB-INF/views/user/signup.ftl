@@ -10,7 +10,7 @@
         </#if>
         <form id="signup" class="appnitro"  method="post" action="dosignup">
               <div class="form_description">
-                 <h2>Sign Up to Awesome UserProfile Application</h2>
+                 <h2>${message!"Welcome to Awesome User Profile Project !"}</h2>
                  <p>Registration Page</p>
               </div>                      
               
@@ -91,7 +91,19 @@
 						</div>    
 					</fieldset>                
                  </li>                       
-                
+ 				 <li id="li_5" >
+					 <fieldset>
+	                  <legend><label class="description" for="element_3">Custom Profiles </label></legend>
+	                    <div>
+	                        <input id="hobby" name="hobby" class="element text large" value="" type="text">
+	                        <label for="hobby">Hobby</label>
+	                    </div>
+						<div>
+							<input id="favorites" name="favorites" class="element text large" value="" type="text">
+							<label for="favorites">Favourites </label>
+						</div>
+	                  </fieldset>
+	              </li>
                 <li class="buttons">
                 <input type="hidden" name="form_id" value="1020154" />                
                     <input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />

@@ -8,7 +8,10 @@ table, th, td {
 </style> 
 <div id="content" width="75%">
 <center>
-  <br> Result : ${result}
+
+	<#if result??>
+  		<br> Result : ${result!""}
+    </#if>
     		
 	<#if userDetails??>
 		<br><br>Here are the Details....

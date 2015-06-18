@@ -8,9 +8,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 import com.rakuten.gid.services.rest.client.ApiClient;
+import com.rakuten.gid.services.rest.client.ApiClientException;
 import com.rakuten.gid.services.rest.client.ApiManager;
 import com.rakuten.gid.services.rest.client.ResponseModel;
 import com.rakuten.gid.services.rest.client.gidimpl.basemodel.AuthV1_2;
+import com.rakuten.gid.services.rest.client.gidimpl.basemodel.CustomProfileV1_2;
 import com.rakuten.gid.services.rest.client.gidimpl.basemodel.MemberV1_2;
 import com.rakuten.gid.services.rest.client.gidimpl.basemodel.helper.CreateProfileModel;
 import com.rakuten.idc.arc.constants.ArcConstants;
@@ -83,25 +85,29 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * This method is used to get the client authentication token.
-     * which will be used by client to do further transactions.
+     * This method is used to get the client authentication token. which will be
+     * used by client to do further transactions.
+     * @throws ApiClientException 
      */
     @Override
-    public ResponseModel getClientAuthention() {
+    public ResponseModel getClientAuthention() throws ApiClientException {
         AuthV1_2 auth = new AuthV1_2();
         auth.setGrant_type(ArcConstants.GRANT_TYPE_CLIENT_CREDENTIALS);
         ApiClient apiClient = ApiManager
                 .getClient(ArcConstants.URL, auth, null);
         ResponseModel model = (ResponseModel) apiClient.getFirst();
+        System.out.println("model value in getClientAuthention :"
+                + model.toString());
         return model;
     }
 
     /**
      * This method is used to authenticate the user, by username and password.
      * Once the user will be authenticated , we get the memberModel.
+     * @throws ApiClientException 
      */
     @Override
-    public ResponseModel getUserAuthentication(User user) {
+    public ResponseModel getUserAuthentication(User user) throws ApiClientException {
         AuthV1_2 auth = new AuthV1_2();
         auth.setGrant_type(ArcConstants.GRANT_TYPE_PASSWORD);
         auth.setUsername(user.getUserName());
@@ -113,10 +119,12 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * This method is used to create the user(Member) using the authentication token and the provided member.
+     * This method is used to create the user(Member) using the authentication
+     * token and the provided member.
+     * @throws ApiClientException 
      */
     @Override
-    public ResponseModel createUser(MemberV1_2 member, String accessToken) {
+    public ResponseModel createUser(MemberV1_2 member, String accessToken) throws ApiClientException {
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
                 accessToken);
         ResponseModel model = (ResponseModel) apiClient.create();
@@ -124,10 +132,12 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * To check the user is already existing using the authentication token and the user information.
+     * To check the user is already existing using the authentication token and
+     * the user information.
+     * @throws ApiClientException 
      */
     @Override
-    public boolean isExistingUser(User user, String authToken) {
+    public boolean isExistingUser(User user, String authToken) throws ApiClientException {
 
         MemberV1_2 member = new MemberV1_2();
         member.setUsername(user.getUserName());
@@ -144,9 +154,10 @@ public class UserServiceImpl implements UserService {
 
     /**
      * To update the member using the authenticationToken.
+     * @throws ApiClientException 
      */
     @Override
-    public boolean updateUser(MemberV1_2 member, String authToken) {
+    public boolean updateUser(MemberV1_2 member, String authToken) throws ApiClientException {
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
                 authToken);
         boolean result = apiClient.update();
@@ -156,9 +167,10 @@ public class UserServiceImpl implements UserService {
 
     /**
      * To delete the user .
+     * @throws ApiClientException 
      */
     @Override
-    public boolean deleteUser(MemberV1_2 member, String authToken) {
+    public boolean deleteUser(MemberV1_2 member, String authToken) throws ApiClientException {
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
                 authToken);
         boolean result = apiClient.delete();
@@ -170,12 +182,22 @@ public class UserServiceImpl implements UserService {
      * To get the user details.
      */
     @Override
-    public ResponseModel getUserDetails(String authenticationToken) {
+    public ResponseModel getUserDetails(String authenticationToken) throws ApiClientException{
         MemberV1_2 member = new MemberV1_2();
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
                 authenticationToken);
         ResponseModel model = (ResponseModel) apiClient.getFirst();
-        System.out.println("Response Returned: " + model.toString());
+        System.out.println("Response Returned getUserDetails: " + model.toString());
+        return model;
+    }
+
+    @Override
+    public ResponseModel addCustomProfile(CustomProfileV1_2 profile,
+            String authToken)throws ApiClientException {
+        ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, profile,
+                authToken);
+        ResponseModel model = (ResponseModel) apiClient.create();
+        System.out.println("Response Returned from addCustomProfile : " + model.toString());
         return model;
     }
 }
