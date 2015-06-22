@@ -21,6 +21,7 @@ import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GidError;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.member.CreateMemberModel;
 import com.rakuten.idc.arc.constants.ArcConstants;
 import com.rakuten.idc.arc.constants.Util;
+import com.rakuten.idc.arc.exception.CustomApiClientException;
 import com.rakuten.idc.arc.service.UserService;
 
 @Controller
@@ -51,9 +52,10 @@ public class RegistrationController {
      * User needs to be registered.
      * @param request
      * @return
+     * @throws ApiClientException 
      */
     @RequestMapping(ArcConstants.REQUEST_MAPPING_DO_SIGNUP)
-    public ModelAndView doSignup(HttpServletRequest request) {
+    public ModelAndView doSignup(HttpServletRequest request) throws ApiClientException {
         ModelAndView model = new ModelAndView();
         GidError error = null;
         String clientAuthToken ;
@@ -61,7 +63,7 @@ public class RegistrationController {
         try {
             responseModel = userService.getClientAuthention();
         } catch (ApiClientException e) {
-            e.printStackTrace();
+            throw new CustomApiClientException("Error while getting Client authentication Token !", e);
         }
 
         if (responseModel.getResponseCode() == 200) {
@@ -81,12 +83,8 @@ public class RegistrationController {
          * Now we need to register the member.
          */
         MemberV1_2 member = createMember(request);
-        try {
-            responseModel = userService.createUser(member, clientAuthToken);
-        } catch (ApiClientException e) {
-            e.printStackTrace();
-        }
-
+        responseModel = userService.createUser(member, clientAuthToken);
+        
         if (responseModel.getResponseCode() == 200) {
             model.setViewName(ArcConstants.PROFILE_VIEW);
             model.addObject(ArcConstants.USER_DETAILS, 
@@ -98,7 +96,7 @@ public class RegistrationController {
             try {
                 responseModel= userService.addCustomProfile(profile,clientAuthToken);
             } catch (ApiClientException e) {
-                e.printStackTrace();
+                throw new CustomApiClientException("Error while adding Custom profile !", e);
             }
             if(responseModel.getResponseCode()==200){
                 System.out.println("Custom Profile Added successfully !");

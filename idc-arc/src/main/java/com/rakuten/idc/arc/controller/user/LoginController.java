@@ -17,6 +17,7 @@ import com.rakuten.gid.services.rest.client.ResponseModel;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GetAuthModel;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GidError;
 import com.rakuten.idc.arc.constants.ArcConstants;
+import com.rakuten.idc.arc.exception.CustomApiClientException;
 import com.rakuten.idc.arc.model.User;
 import com.rakuten.idc.arc.service.LoginService;
 
@@ -49,9 +50,10 @@ public class LoginController {
      * now user wants to log in to the system.
      * @param request
      * @return
+     * @throws CustomApiClientException 
      */
     @RequestMapping(ArcConstants.REQUEST_MAPPING_AUTHENTICATE)
-    public ModelAndView authenticate(HttpServletRequest request) {
+    public ModelAndView authenticate(HttpServletRequest request) throws CustomApiClientException {
         
         HttpSession session = request.getSession(true);
        /**
@@ -69,8 +71,8 @@ public class LoginController {
         ResponseModel rmodel = null;
         try {
             rmodel = loginService.authenticate(user);
-        } catch (ApiClientException e) {
-            e.printStackTrace();
+        } catch (ApiClientException ex) {
+            throw new CustomApiClientException("Exception in Authenticate Service", ex);
         }
       
         GetAuthModel authModel = null;
@@ -100,16 +102,17 @@ public class LoginController {
     
     /**
      * This method will show the profile information of the user.
+     * @throws CustomApiClientException 
      */
     @RequestMapping(ArcConstants.REQUEST_MAPPING_PROFILE)
-    public ModelAndView getProfileDetails(HttpServletRequest request) {
+    public ModelAndView getProfileDetails(HttpServletRequest request) throws CustomApiClientException {
         GetAuthModel authModel = new GetAuthModel();
         authModel = (GetAuthModel) request.getSession().getAttribute(ArcConstants.AUTHMODEL);
         Map<String,Object> userDetails = new LinkedHashMap<String,Object>();
         try {
             userDetails=loginService.getUserDetails(authModel.getAccess_token());
-        } catch (ApiClientException e) {
-            e.printStackTrace();
+        } catch (ApiClientException ex) {
+            throw new CustomApiClientException("Exception while getting User Details", ex);
         }
       
         /**

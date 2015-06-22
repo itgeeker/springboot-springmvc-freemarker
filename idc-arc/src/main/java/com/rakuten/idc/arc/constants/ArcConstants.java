@@ -29,7 +29,7 @@ public class ArcConstants {
     public static final String USER_VIEW = "user/user";
     public static final String SIGNUP_VIEW = "user/signup";
     public static final String SUCCESS_VIEW = "user/success";
-
+    public static final String ERROR_VIEW = "user/error";
     /**
      * View objects/parameters (Objects which are sending to view)
      */
