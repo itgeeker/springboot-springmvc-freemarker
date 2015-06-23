@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.rakuten.gid.services.rest.client.ApiClientException;
@@ -19,6 +21,8 @@ import com.rakuten.idc.arc.service.LoginService;
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    Logger logger = LoggerFactory.getLogger(getClass());
+    
     UserServiceImpl userServices = new UserServiceImpl();
 
     @Override
@@ -51,9 +55,9 @@ public class LoginServiceImpl implements LoginService {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        System.out.println(properties.get(ArcConstants.VIEW_PREFIX));
-        System.out.println(properties.get(ArcConstants.VIEW_SUFFIX));
-        System.out.println(properties.get(ArcConstants.TEMPLATE_LOADER_PATH));
+        logger.debug(properties.get(ArcConstants.VIEW_PREFIX).toString());
+        logger.debug(properties.get(ArcConstants.VIEW_SUFFIX).toString());
+        logger.debug(properties.get(ArcConstants.TEMPLATE_LOADER_PATH).toString());
     }
 
     /**
@@ -61,7 +65,7 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public Map<String, Object> getUserDetails(String passwordAuthenticationToken)throws ApiClientException {
-        System.out.println("Entering the getUserDetails..");
+        logger.debug("Entering the getUserDetails..");
         Map<String, Object> userDetails = new HashMap<String, Object>();
         ResponseModel model = userServices.getUserDetails(passwordAuthenticationToken);
         
@@ -69,9 +73,9 @@ public class LoginServiceImpl implements LoginService {
             userDetails=Util.displayMemberDetails((MemberModel) model);
         } else {
             userDetails.put(ArcConstants.ERROR, model.toString());
-            System.out.println("Error happened: " + model.toString());
+            logger.error("Error happened: " + model.toString());
         }
-        System.out.println("Exiting the getUserDetails...");
+        logger.debug("Exiting the getUserDetails...");
         return userDetails;
     }
 

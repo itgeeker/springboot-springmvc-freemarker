@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +19,14 @@ import com.rakuten.gid.services.rest.client.ResponseModel;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GetAuthModel;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GidError;
 import com.rakuten.idc.arc.constants.ArcConstants;
-import com.rakuten.idc.arc.exception.CustomApiClientException;
 import com.rakuten.idc.arc.model.User;
 import com.rakuten.idc.arc.service.LoginService;
 
 @Controller
 @ConfigurationProperties(prefix = ArcConstants.MY_SITE)
 public class LoginController {
+
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     private LoginService loginService;
 
@@ -50,10 +53,10 @@ public class LoginController {
      * now user wants to log in to the system.
      * @param request
      * @return
-     * @throws CustomApiClientException 
+     * @throws ApiClientException 
      */
     @RequestMapping(ArcConstants.REQUEST_MAPPING_AUTHENTICATE)
-    public ModelAndView authenticate(HttpServletRequest request) throws CustomApiClientException {
+    public ModelAndView authenticate(HttpServletRequest request) throws ApiClientException {
         
         HttpSession session = request.getSession(true);
        /**
@@ -69,11 +72,7 @@ public class LoginController {
         user.setPassword(request.getParameter(ArcConstants.PASSWORD));
         
         ResponseModel rmodel = null;
-        try {
-            rmodel = loginService.authenticate(user);
-        } catch (ApiClientException ex) {
-            throw new CustomApiClientException("Exception in Authenticate Service", ex);
-        }
+        rmodel = loginService.authenticate(user);
       
         GetAuthModel authModel = null;
         GidError error = null;
@@ -87,34 +86,30 @@ public class LoginController {
             model.addObject(ArcConstants.RESULT, ArcConstants.AUTHENTICATION_SUCCESS);
             model.addObject(ArcConstants.USER, user);
             model.setViewName(ArcConstants.LOGIN_SUCCESS);
-            
+            logger.debug("Login Successful !");
         } else {
             /**
              * Error while logging in.
              */
             error = (GidError) rmodel;
-            System.out.println(ArcConstants.AUTHENTICATION_ERROR + error.toString());
             model.addObject(ArcConstants.ERROR, error.toString());
             model.setViewName(ArcConstants.LOGIN_VIEW);
+            logger.debug("Authentication Error ! "+error.toString());
         }
         return model;
     }
     
     /**
      * This method will show the profile information of the user.
-     * @throws CustomApiClientException 
+     * @throws ApiClientException 
      */
     @RequestMapping(ArcConstants.REQUEST_MAPPING_PROFILE)
-    public ModelAndView getProfileDetails(HttpServletRequest request) throws CustomApiClientException {
+    public ModelAndView getProfileDetails(HttpServletRequest request) throws ApiClientException {
         GetAuthModel authModel = new GetAuthModel();
         authModel = (GetAuthModel) request.getSession().getAttribute(ArcConstants.AUTHMODEL);
         Map<String,Object> userDetails = new LinkedHashMap<String,Object>();
-        try {
             userDetails=loginService.getUserDetails(authModel.getAccess_token());
-        } catch (ApiClientException ex) {
-            throw new CustomApiClientException("Exception while getting User Details", ex);
-        }
-      
+     
         /**
          * Set view related objects
          */

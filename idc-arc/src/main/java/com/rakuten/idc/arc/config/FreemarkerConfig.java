@@ -1,5 +1,7 @@
 package com.rakuten.idc.arc.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,8 @@ import com.rakuten.idc.arc.constants.ArcConstants;
 
 @Configuration
 public class FreemarkerConfig {
+
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     @Value(ArcConstants.VIEW_PREFIX)
     private String viewPrefix;
@@ -24,7 +28,7 @@ public class FreemarkerConfig {
     @Bean
     public FreeMarkerConfigurer freeMarkerConfigurer() {
         FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
-        System.out.println("templatePath : " + templatePath);
+        logger.debug("templatePath : " + templatePath);
         configurer.setTemplateLoaderPath(templatePath);
         configurer.setDefaultEncoding(ArcConstants.DEFAULT_ENCODING);
         return configurer;
@@ -34,8 +38,8 @@ public class FreemarkerConfig {
     public ViewResolver getViewResolver() {
         FreeMarkerViewResolver viewResolver = new FreeMarkerViewResolver();
         viewResolver.setCache(true);
-        System.out.println("Viewprefix : " + viewPrefix);
-        System.out.println("viewSuffix : " + viewSuffix);
+        logger.debug("Viewprefix : " + viewPrefix + "\n" + "viewSuffix : "
+                + viewSuffix);
         viewResolver.setPrefix(viewPrefix);
         viewResolver.setSuffix(viewSuffix);
         viewResolver.setContentType(ArcConstants.DEFAULT_CONTENT_TYPE);

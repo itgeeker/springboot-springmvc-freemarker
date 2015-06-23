@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.rakuten.gid.services.rest.client.ApiClient;
@@ -21,6 +23,8 @@ import com.rakuten.idc.arc.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
+    
+    Logger logger = LoggerFactory.getLogger(getClass());
     private static List<User> userList = new ArrayList<User>();
     private static Map<String, User> userMap = new ConcurrentHashMap<String, User>();
 
@@ -96,7 +100,7 @@ public class UserServiceImpl implements UserService {
         ApiClient apiClient = ApiManager
                 .getClient(ArcConstants.URL, auth, null);
         ResponseModel model = (ResponseModel) apiClient.getFirst();
-        System.out.println("model value in getClientAuthention :"
+        logger.debug("model value in getClientAuthention :"
                 + model.toString());
         return model;
     }
@@ -148,7 +152,7 @@ public class UserServiceImpl implements UserService {
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
                 authToken);
         boolean exists = apiClient.exists();
-        System.out.println("Is User Exist ? : " + exists);
+        logger.debug("Is User Exist ? : " + exists);
         return exists;
     }
 
@@ -161,7 +165,7 @@ public class UserServiceImpl implements UserService {
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
                 authToken);
         boolean result = apiClient.update();
-        System.out.println("updated ? : " + result);
+        logger.debug("updated ? : " + result);
         return result;
     }
 
@@ -174,7 +178,7 @@ public class UserServiceImpl implements UserService {
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
                 authToken);
         boolean result = apiClient.delete();
-        System.out.println("Deleted ? : " + result);
+        logger.debug("Deleted ? : " + result);
         return result;
     }
 
@@ -187,7 +191,7 @@ public class UserServiceImpl implements UserService {
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, member,
                 authenticationToken);
         ResponseModel model = (ResponseModel) apiClient.getFirst();
-        System.out.println("Response Returned getUserDetails: " + model.toString());
+        logger.debug("Response Returned getUserDetails: " + model.toString());
         return model;
     }
 
@@ -197,7 +201,7 @@ public class UserServiceImpl implements UserService {
         ApiClient apiClient = ApiManager.getClient(ArcConstants.URL, profile,
                 authToken);
         ResponseModel model = (ResponseModel) apiClient.create();
-        System.out.println("Response Returned from addCustomProfile : " + model.toString());
+        logger.debug("Response Returned from addCustomProfile : " + model.toString());
         return model;
     }
 }
