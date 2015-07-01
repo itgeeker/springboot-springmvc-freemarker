@@ -94,7 +94,7 @@ cargo {
     port = 8080
 
     deployable {
-        context = 'idc-arc'
+        context = 'aup'
     }
 
     remote {

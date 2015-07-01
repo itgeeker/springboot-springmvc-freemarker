@@ -1,8 +1,13 @@
 package com.rakuten.idc.arc.constants;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.commons.collections.MapUtils;
 
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.Address;
 import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.CardModel;
@@ -31,6 +36,7 @@ public class Util {
         userDetails.put(ArcConstants.CARD_MODEL, createCardModelMap(memberModel.getCard()));
         userDetails.put(ArcConstants.ADDRESS_MODEL, createAddressMap(memberModel.getAddress()));
         userDetails.put(ArcConstants.GLOBAL_ID_MODEL, createGlobalIdMap(memberModel.getId()));
+        userDetails.put(ArcConstants.CUSTOM_PROFILE, createCustomMap(memberModel.getCustom_profiles()));
         
         System.out.println("MEMBER_MODEL : "+ memberModel.toString());
         System.out.println("User Details : "+ userDetails);
@@ -43,6 +49,9 @@ public class Util {
         globalIdMap.put("member_id", id.getMember_id());
         return globalIdMap;
     }
+    
+    
+    
 
     private static Map<String, Object> createAddressMap(List<Address> address) {
        Map<String, Object> addresMap = new LinkedHashMap<String, Object>();
@@ -147,5 +156,19 @@ public class Util {
         createMemberModel.put("access_token", responseModel.getAccess_token());
         createMemberModel.put("Address", responseModel.getAddress().getId());
         return createMemberModel;
+    }
+    
+    private static Object createCustomMap(HashMap<String, String> cpMap) {
+        Map<String,Object> customProfileMap = new LinkedHashMap<String,Object>();
+       
+        if(!MapUtils.isEmpty(cpMap)){
+            Iterator<Entry<String, String>> it = cpMap.entrySet().iterator();
+            while(it.hasNext()){
+                Map.Entry<String, String> custom = (Map.Entry<String, String>)it.next();
+                customProfileMap.put(custom.getKey(), custom.getValue());                
+            }
+            
+        }        
+        return customProfileMap;
     }
 }

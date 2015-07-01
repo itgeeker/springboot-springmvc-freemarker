@@ -30,6 +30,7 @@ public class ArcConstants {
     public static final String SIGNUP_VIEW = "user/signup";
     public static final String SUCCESS_VIEW = "user/success";
     public static final String ERROR_VIEW = "user/error";
+    public static final String CUSTOM_PROFILE_VIEW = "user/customprofile";
     /**
      * View objects/parameters (Objects which are sending to view)
      */
@@ -52,6 +53,7 @@ public class ArcConstants {
     public static final String GLOBAL_ID_MODEL = "GlobalIdModel";
     public static final String ADDRESS_MODEL = "AddressModel";
     public static final String MEMBER_MODEL ="MemberModel";
+    public static final String CUSTOM_PROFILE = "CustomProfile";
     
     /**
      * Session Attributes
@@ -77,6 +79,8 @@ public class ArcConstants {
     public static final String REQUEST_MAPPING_SIGNUP = "/signup";
     public static final String REQUEST_MAPPING_DO_SIGNUP = "/dosignup";
     public static final String REQUEST_MAPPING_PROFILE = "/profile";
+    public static final String REQUEST_MAPPING_CUSTOM_PROFILE = "/customprofile";
+    public static final String REQUEST_MAPPING_SAVE_CUSTOM_PROFILE = "/savecustomprofile";
 
     /**
      * Spring Related Constants
@@ -112,5 +116,8 @@ public class ArcConstants {
      */
     public static final String GRANT_TYPE_PASSWORD = "password";
     public static final String GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
+    
+    
+    
 }
 

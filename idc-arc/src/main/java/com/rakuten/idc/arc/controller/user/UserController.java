@@ -1,5 +1,8 @@
 package com.rakuten.idc.arc.controller.user;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.rakuten.gid.services.rest.client.ApiClientException;
+import com.rakuten.gid.services.rest.client.gidimpl.basemodel.CustomProfileV1_2;
+import com.rakuten.gid.services.rest.client.gidimpl.responsemodel.GetAuthModel;
 import com.rakuten.idc.arc.constants.ArcConstants;
 import com.rakuten.idc.arc.model.User;
 import com.rakuten.idc.arc.service.UserService;
@@ -57,8 +63,9 @@ public class UserController {
                     ArcConstants.ADD_USER_SUCCESSFUL);
         }
         return model;
-    }
-
+    }  
+    
+    
     private User processUser(HttpServletRequest request) {
         User user = new User();
         String firstName = request.getParameter(ArcConstants.FIRST_NAME);
